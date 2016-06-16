@@ -9,6 +9,10 @@
     <dimen name="degrees_text_size">20dp</dimen>
 
     <!-- Custom Margins -->
+    <dimen name="date_top_margin">25dp</dimen>
     <dimen name="degrees_top_margin">15dp</dimen>
+
+    <!-- Custom Dimensions -->
+    <dimen name="list_item_forcast_textview_minHeight">30dp</dimen>
 
 </resources>

@@ -5,4 +5,6 @@
 
     <string name="date_hint_text">Today, June 24</string>
     <string name="fahrenheit_degrees_hint_text">21°F</string>
+    <string name="celsius_degrees_hint_text">8°C</string>
+
 </resources>
