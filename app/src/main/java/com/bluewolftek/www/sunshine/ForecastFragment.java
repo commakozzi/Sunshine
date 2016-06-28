@@ -62,7 +62,7 @@ public class ForecastFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // Launch Refresh to get current weather:
         if (id == R.id.action_refresh) {
             FetchWeatherTask getWeather = new FetchWeatherTask();
             getWeather.execute("30022, us");
