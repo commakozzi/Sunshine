@@ -1,9 +1,11 @@
 package com.bluewolftek.www.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -29,8 +31,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -40,7 +40,7 @@ public class ForecastFragment extends Fragment {
     private ArrayAdapter<String> mForecastAdapter;
 
     public ForecastFragment() {
-        //Default required empty constructor.
+        // Default required empty constructor.
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ForecastFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.forecastfragment, menu);
-    } //End onCreateOptionsMenu.
+    } // End onCreateOptionsMenu.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -64,44 +64,48 @@ public class ForecastFragment extends Fragment {
 
         // Launch Refresh to get current weather:
         if (id == R.id.action_refresh) {
-            FetchWeatherTask getWeather = new FetchWeatherTask();
-            getWeather.execute("30022, us");
+            updateWeather();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    } //End onOptionsItemSelected.
+    } // End onOptionsItemSelected.
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // The ArrayAdapter will take data from a source and
+        // use it to populate the ListView it's attached to:
+        mForecastAdapter =
+                new ArrayAdapter<String>(
+                        getActivity(), // The current contest (this activity)
+                        R.layout.list_item_forecast, // The name of the layout ID.
+                        R.id.list_item_forecast_textview, // The ID of the textview to populate.
+                        new ArrayList<String>());
+
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        //Define new ArrayList for forecast items:
-        String[] forecastArray = {
-                "Today - Cool - 66/33",
-                "Tomorrow - Warm - 75/42",
-                "Weds - Hot - 88/63",
-                "Thurs - Much Hotter - 101/83",
-                "Fri - Holy Shit! - 125/110",
-                "Sat - NO DATA"
-        };
-
+        /*
         List<String> weekForecast = new ArrayList<String>(
                 Arrays.asList(forecastArray));
+                */
 
-        //Initialize ArrayAdapter for list_item_forecast:
+        /*
+        // Initialize ArrayAdapter for list_item_forecast:
         mForecastAdapter =
                 new ArrayAdapter<String>(
                     getActivity(),
                     R.layout.list_item_forecast,
                     R.id.list_item_forecast_textview,
                     weekForecast);
+                    */
 
-        //Bind the adapter to the fragment listview:
+        // Bind the adapter to the fragment listview:
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String forecast = mForecastAdapter.getItem(position).toString();
@@ -113,6 +117,20 @@ public class ForecastFragment extends Fragment {
 
         return rootView;
     } //End onCreateView.
+
+    private void updateWeather() {
+        FetchWeatherTask getWeather = new FetchWeatherTask();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = prefs.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+        getWeather.execute(location + ", us");
+    } // End updateWeather();
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
@@ -215,7 +233,7 @@ public class ForecastFragment extends Fragment {
             }
             return resultStrs;
 
-        }
+        } // End getWeatherDataFromJson();
 
         @Override
         protected String[] doInBackground(String... params) {
@@ -317,7 +335,7 @@ public class ForecastFragment extends Fragment {
             }
 
             return null;
-        }
+        } // End doInBackground();
 
         @Override
         protected void onPostExecute(String[] result) {
@@ -327,7 +345,7 @@ public class ForecastFragment extends Fragment {
                     mForecastAdapter.add(dayForecastStr);
                 }
             }
-        }
+        } // End onPostExecute();
 
     } //End FetchWeatherTask.
 }
