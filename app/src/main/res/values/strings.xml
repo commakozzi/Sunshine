@@ -1,23 +1,31 @@
 <resources>
+    <!-- Title Strings -->
     <string name="app_name">Sunshine</string>
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
     <string name="hello_world">Hello world!</string>
-
-    <string name="date_hint_text">Today, June 24</string>
-    <string name="fahrenheit_degrees_hint_text">21°F</string>
-    <string name="celsius_degrees_hint_text">8°C</string>
     <string name="title_activity_detail">Details</string>
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Preference Strings -->
+    <!-- Hint Strings -->
+    <string name="date_hint_text">Today, June 24</string>
+    <string name="fahrenheit_degrees_hint_text">21°F</string>
+    <string name="celsius_degrees_hint_text">8°C</string>
+
+    <!-- Preference Item Labels -->
     <string name="pref_location_label">Location</string>
-    <string name="pref_location_key" translatable="false">location</string>
-    <string name="pref_location_default" translatable="false">30022</string>
     <string name="pref_units_label">Temperature Units</string>
     <string name="pref_units_label_metric">Metric</string>
     <string name="pref_units_label_imperial">Imperial</string>
+
+    <!-- Preference Item Keys -->
+    <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_units_key" translatable="false">units</string>
+
+    <!-- Preference Item Defaults -->
+    <string name="pref_location_default" translatable="false">30022</string>
+
+    <!-- Preference Items -->
     <string name="pref_units_metric" translatable="false">metric</string>
     <string name="pref_units_imperial" translatable="false">imperial</string>
 
